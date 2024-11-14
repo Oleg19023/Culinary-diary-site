@@ -87,10 +87,17 @@ if (searchInput) {
         let foundAny = false; // Переменная для отслеживания наличия совпадений
 
         cards.forEach(function(card) {
-            let title = card.querySelector('.card-title').textContent.toLowerCase(); // Получаем название блюда
-            const isVisible = title.includes(filter);
-            card.style.display = isVisible ? '' : 'none'; // Показываем или скрываем карточку
-            foundAny = foundAny || isVisible; // Устанавливаем флаг, что нашли хотя бы одну карточку
+            // Проверяем, является ли карточка кнопкой добавления
+            const isAddNewDishCard = card.querySelector('.fa-plus') !== null;
+            if (isAddNewDishCard) {
+                // Всегда отображаем карточку добавления нового блюда
+                card.style.display = '';
+            } else {
+                let title = card.querySelector('.card-title').textContent.toLowerCase(); // Получаем название блюда
+                const isVisible = title.includes(filter);
+                card.style.display = isVisible ? '' : 'none'; // Показываем или скрываем карточку
+                foundAny = foundAny || isVisible; // Устанавливаем флаг, что нашли хотя бы одну карточку
+            }
         });
 
         // Если ничего не найдено, отображаем сообщение
@@ -110,6 +117,7 @@ if (searchInput) {
         messageElement.style.display = foundAny ? 'none' : 'block';
     });
 }
+
 
 // Функция для обрезки текста
 function truncateText(selector, maxLength) {
@@ -174,7 +182,7 @@ function loadLikeStates() {
 
         // Проверяем, есть ли лайк для этой карточки
         if (likeStates[cardTitle]) {
-            button.classList.add('red'); // Если лайкнут, добавляем класс "red"
+            button.classList.add('red'); // Если лайкнута, добавляем класс "red"
         }
     });
     updateHeaderLikeCount(likeStates);
@@ -239,12 +247,13 @@ document.getElementById('showLiked').addEventListener('click', function () {
     localStorage.setItem('showingLiked', showingLiked);
 
     cards.forEach(card => {
-        const cardTitle = card.querySelector('.card-title').textContent;
+        const isAddNewDishCard = card.querySelector('.fa-plus') !== null; // Определяем карточку добавления блюда
+        const cardTitle = card.querySelector('.card-title') ? card.querySelector('.card-title').textContent : '';
 
         // Если показываем лайкнутые карточки
         if (showingLiked) {
-            if (likedRecipes[cardTitle]) {
-                card.style.display = ''; // Показываем лайкнутую карточку
+            if (likedRecipes[cardTitle] || isAddNewDishCard) {
+                card.style.display = ''; // Показываем лайкнутую карточку или карточку добавления
             } else {
                 card.style.display = 'none'; // Скрываем нелайкнутую карточку
             }
@@ -266,6 +275,210 @@ document.getElementById('showLiked').addEventListener('click', function () {
 document.addEventListener('DOMContentLoaded', () => {
     loadLikeStates(); // Загружаем состояния лайков
 });
+
+
+
+// Показать форму для добавления нового блюда
+function addNewDish() {
+    // Убедитесь, что форма скрыта
+    document.getElementById('addDishForm').style.display = 'block';
+    // Скрыть кнопку добавления блюда
+    document.querySelector('.add-dish-btn').style.display = 'none';
+}
+
+// Отменить добавление блюда
+function cancelAddDish() {
+    // Скрыть форму добавления блюда
+    document.getElementById('addDishForm').style.display = 'none';
+    // Показать кнопку снова
+    document.querySelector('.add-dish-btn').style.display = 'block';
+}
+
+// Проверим, чтобы код корректно работал при загрузке
+document.addEventListener("DOMContentLoaded", function() {
+    console.log("Страница загружена и готова!");
+});
+
+
+
+
+
+
+
+
+
+// Показати форму для додавання нової страви
+function addNewDish() {
+    document.getElementById('addDishForm').style.display = 'block';
+    document.querySelector('.add-dish-btn').classList.add('d-none'); // Додаємо клас для приховування кнопки
+}
+
+// Відмінити додавання страви
+function cancelAddDish() {
+    document.getElementById('addDishForm').style.display = 'none';
+    document.querySelector('.add-dish-btn').classList.remove('d-none'); // Прибираємо клас для показу кнопки знову
+}
+
+// Встановлення рейтингу за допомогою зірочок
+function setRating(stars) {
+    const starsList = document.querySelectorAll('#starRating .star');
+    starsList.forEach((star, index) => {
+        if (index < stars) {
+            star.classList.add('selected'); // Золотий колір для вибраних зірок
+        } else {
+            star.classList.remove('selected'); // Прибираємо колір з невибраних зірок
+        }
+    });
+}
+
+// Зберегти нову страву
+document.getElementById('saveDishBtn').addEventListener('click', function() {
+    const dishName = document.getElementById('dishName').value;
+    const dishDescription = document.getElementById('dishDescription').value;
+    const difficulty = document.querySelectorAll('#starRating .star.selected').length; // Кількість вибраних зірок
+    const dishImage = document.getElementById('dishImage').files[0];
+
+    if (dishName && dishDescription && difficulty > 0 && dishImage) {
+        // Завантаження зображення в Firebase
+        const storageRef = firebase.storage().ref();
+        const imageRef = storageRef.child('dishes/' + dishImage.name);
+        
+        imageRef.put(dishImage).then(function(snapshot) {
+            imageRef.getDownloadURL().then(function(url) {
+                // Збереження в Firestore
+                firebase.firestore().collection('dishes').add({
+                    name: dishName,
+                    description: dishDescription,
+                    difficulty: difficulty,
+                    imageUrl: url,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                }).then(function() {
+                    alert("Страву додано!");
+                    cancelAddDish(); // Закрити форму
+                }).catch(function(error) {
+                    console.error('Помилка при додаванні страви: ', error);
+                    alert('Щось пішло не так! Спробуйте ще раз.');
+                });
+            });
+        }).catch(function(error) {
+            console.error('Помилка при завантаженні зображення: ', error);
+            alert('Не вдалося завантажити зображення! Спробуйте ще раз.');
+        });
+    } else {
+        alert('Заповніть усі поля!');
+    }
+});
+
+// Обробник для встановлення рейтингу
+document.querySelectorAll('.star').forEach(star => {
+    star.addEventListener('click', function() {
+        const ratingValue = parseInt(this.getAttribute('data-value'));
+        setRating(ratingValue);
+    });
+});
+
+// Завантажуємо всі страви з Firestore та відображаємо їх на сайті
+function loadDishes() {
+    firebase.firestore().collection('dishes').orderBy('createdAt', 'desc').get()
+    .then(function(querySnapshot) {
+        const dishContainer = document.getElementById('dishContainer');
+        dishContainer.innerHTML = ''; // Очищаємо контейнер перед завантаженням
+
+        querySnapshot.forEach(function(doc) {
+            const dishData = doc.data();
+            const dishCard = createDishCard(dishData); // Функція для створення картки
+            dishContainer.appendChild(dishCard); // Додаємо картку в контейнер
+        });
+    }).catch(function(error) {
+        console.error('Помилка при завантаженні страв: ', error);
+        alert('Не вдалося завантажити страви! Спробуйте ще раз.');
+    });
+}
+
+// Функція для створення картки страви
+function createDishCard(dishData) {
+    const dishCard = document.createElement('div');
+    dishCard.classList.add('col-12', 'col-sm-6', 'col-md-4', 'col-lg-4'); // Додаємо класи для адаптивності
+
+    const card = document.createElement('div');
+    card.classList.add('card', 'p-2', 'shadow', 'col'); // Класи для картки
+
+    // Створюємо зображення
+    const dishImage = document.createElement('img');
+    dishImage.src = dishData.imageUrl;
+    dishImage.classList.add('card-img-top');
+    dishImage.alt = dishData.name;
+
+    // Створюємо тіло картки
+    const dishBody = document.createElement('div');
+    dishBody.classList.add('card-body');
+
+    // Назва страви
+    const dishName = document.createElement('h5');
+    dishName.classList.add('card-title');
+    dishName.textContent = dishData.name;
+
+    // Опис складності
+    const difficulty = document.createElement('div');
+    const difficultyTitle = document.createElement('p');
+    difficultyTitle.innerHTML = `<b>Складність</b>`;
+    difficulty.appendChild(difficultyTitle);
+
+    // Зірки для складності
+    for (let i = 0; i < 5; i++) {
+        const star = document.createElement('i');
+        if (i < dishData.difficulty) {
+            star.classList.add('fa-solid', 'fa-star');
+            star.style.color = '#ffae00f1'; // Золотий колір для вибраних зірок
+        } else {
+            star.classList.add('fa-regular', 'fa-star');
+            star.style.color = '#ffae00f1'; // Звичайні зірки для невибраних
+        }
+        difficulty.appendChild(star);
+    }
+
+    // Опис страви
+    const dishDescription = document.createElement('div');
+    const descriptionText = document.createElement('p');
+    descriptionText.textContent = dishData.description;
+    dishDescription.appendChild(descriptionText);
+
+    // Кнопки для рецепту і лайка
+    const buttonContainer = document.createElement('div');
+    
+    const recipeButton = document.createElement('button');
+    recipeButton.classList.add('btn', 'bg-dark', 'text-white');
+    recipeButton.textContent = 'Переглянути рецепт';
+
+    const likeButton = document.createElement('button');
+    likeButton.classList.add('btn', 'bg-secondary-subtle', 'border-4', 'rounded');
+    const likeIcon = document.createElement('i');
+    likeIcon.classList.add('fa-solid', 'fa-heart');
+    likeButton.appendChild(likeIcon);
+
+    buttonContainer.appendChild(recipeButton);
+    buttonContainer.appendChild(likeButton);
+
+    // Збираємо всі частини картки
+    card.appendChild(dishImage);
+    card.appendChild(dishBody);
+    dishBody.appendChild(dishName);
+    dishBody.appendChild(difficulty);
+    dishBody.appendChild(dishDescription);
+    dishBody.appendChild(buttonContainer);
+
+    // Додаємо картку в контейнер
+    dishCard.appendChild(card);
+    return dishCard;
+}
+
+// Завантажуємо всі страви при першому завантаженні сторінки
+window.onload = function() {
+    loadDishes();
+};
+
+
+
 
 
 

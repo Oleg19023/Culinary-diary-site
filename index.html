@@ -1,441 +1,89 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Кулінарія</title>
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="./assets/images/site-logo.png" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="./assets/css/style.css">
-    <script src="https://cdn.jsdelivr.net/npm/tsparticles@3.0.2/tsparticles.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
-</head>
-<body>
-    <div id="tsparticles"></div>
-	<header>
-		<nav class="navbar navbar-expand-lg">
-			<div class="container-fluid">
-				<a class="navbar-brand" href="#"><i class="fa-solid fa-drumstick-bite fa-xl"></i></a>
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav me-auto">
-						<li class="nav-item">
-							<a class="nav-link active" aria-current="page" href="#"><b>Головна</b></a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="./page-recepty.html">Рецепти</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="./page-inne.html">Розробники</a>
-						</li>
-					</ul> 					
-					
-					<!-- Кнопка для показа только лайкнутых карточек -->
-					<button id="showLiked" class="btn bg-secondary-subtle border-4 rounded me-2">
-						<i class="fa-solid fa-heart"></i>
-						<span id="headerLikeCount">0</span> <!-- Элемент для отображения количества лайков -->
-					</button>
-	
-					<!-- Поле поиска (по умолчанию скрыто) -->
-					<input id="searchInput" type="text" class="form-control" placeholder="Пошук страви" aria-label="Пошук страви" aria-describedby="basic-addon2" style="max-width: 200px; margin-right: 10px; display: none;">
-					
-					<!-- Кнопка переключения темы -->
-					<button id="themeToggle" class="btn btn-outline-secondary">
-						<i id="themeIcon" class="fas fa-moon"></i>
-					</button>
-	
-					<!-- Кнопка поиска -->
-					<button id="searchToggle" class="btn btn-outline-secondary">
-						<i class="fa-solid fa-magnifying-glass"></i>
-					</button>
-				</div>
-			</div>
-		</nav>
-	</header>		  
-	<main class="container"> 
-		<div class="container">	
-			<div class="wrap d-flex flex-column">
-				<div class="flex-grow-1">
-					<h1 class="p-1">Кулінарний щоденник</h1>
-					<p class="text-justify">
-						Ласкаво просимо на сайт "Кулінарний Щоденник" – вашого найкращого помічника у світі кулінарії! Ми пропонуємо унікальний простір, де ви можете знаходити та ділитися чудовими рецептами, натхненням для приготування страв, а також порадами від досвідчених кухарів.
-					</p>
-	
-					<!-- Сетка карточек -->
-					<div class="row g-3">
-						<!-- Карточка 1: Борщ з пампушками -->
-						<div class="col-12 col-sm-6 col-md-4 col-lg-4">
-							<div class="card p-2 shadow col">
-								<img src="./assets/images/borsh.png" class="card-img-top" alt="Борщ з пампушками">
-								<div class="card-body">
-									<h5 class="card-title">Борщ з пампушками</h5>
-									<div>
-										<p><b>Складність</b></p>
-										<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-										<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-										<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-										<i style="color: #ffae00f1;" class="fa-regular fa-star"></i>
-										<i style="color: #ffae00f1;" class="fa-regular fa-star"></i>
-									</div>
-									<div>
-										<p>Борщ з пампушками — традиційна українська страва на основі буряка, капусти, картоплі та м'яса, яка подається гарячою зі сметаною.</p>
-									</div>
-									<div>
-										<button class="btn bg-dark text-white">Дивитись рецепт</button>
-										<button class="btn bg-secondary-subtle border-4 rounded">
-											<i class="fa-solid fa-heart"></i>
-										</button>
-									</div>
-								</div>
-							</div>
-						</div>
-	
-						<!-- Карточка 2: Голубці -->
-						<div class="col-12 col-sm-6 col-md-4 col-lg-4">
-							<div class="card p-2 shadow">
-								<img src="./assets/images/golubki.png" class="card-img-top" alt="Голубці">
-								<div class="card-body">
-									<h5 class="card-title">Голубці</h5>
-									<div>
-										<p><b>Складність</b></p>
-										<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-										<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-										<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-										<i style="color: #ffae00f1;" class="fa-regular fa-star"></i>
-										<i style="color: #ffae00f1;" class="fa-regular fa-star"></i>
-									</div>
-									<div>
-										<p>Голубці — це традиційна українська страва, що складається з м'ясного або овочевого начинки, загорнутої у варені капустяні листки.</p>
-									</div>
-									<div>
-										<button class="btn bg-dark text-white">Дивитись рецепт</button>
-										<button class="btn bg-secondary-subtle border-4 rounded">
-											<i class="fa-solid fa-heart"></i>
-										</button>
-									</div>
-								</div>
-							</div>
-						</div> 
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome to Firebase Hosting</title>
 
-						<!-- Карточка 3: Холодець -->
-						<div class="col-12 col-sm-6 col-md-4 col-lg-4">
-							<div class="card p-2 shadow">
-								<img src="./assets/images/Cholodec.png" class="card-img-top" alt="Холодець">
-								<div class="card-body">
-									<h5 class="card-title">Холодець</h5>
-									<div>
-										<p><b>Складність</b></p>
-										<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-										<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-										<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-										<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-										<i style="color: #ffae00f1;" class="fa-regular fa-star"></i>
-									</div>
-									<div>
-										<p>Холодець — це традиційна холодна закуска, що готується з м'яса, яке вариться до стану желе. Основні інгредієнти включають свинячі або яловичі м'ясні частини, які довго варять з овочами і спеціями.</p>
-									</div>
-									<div>
-										<button class="btn bg-dark text-white">Дивитись рецепт</button>
-										<button class="btn bg-secondary-subtle border-4 rounded">
-											<i class="fa-solid fa-heart"></i>
-										</button>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						<!-- Карточка 4: Котлета по-київськи -->
-						<div class="col-12 col-sm-6 col-md-4 col-lg-4">
-							<div class="card p-2 shadow">
-								<img src="./assets/images/kotleta.png" class="card-img-top" alt="Котлета по-київськи">
-								<div class="card-body">
-									<h5 class="card-title">Котлета по-київськи</h5>
-									<div>
-										<p><b>Складність</b></p>
-										<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-										<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-										<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-										<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-										<i style="color: #ffae00f1;" class="fa-regular fa-star"></i>
-									</div>
-									<div>
-										<p>Котлета по-київськи — це популярна українська страва, що складається з курячого філе, начиненого вершковим маслом з зеленню та спеціями. Куряче філе обвалюється у панірувальних сухарях і смажиться до золотистої скоринки.</p>
-									</div>
-									<div>
-										<button class="btn bg-dark text-white">Дивитись рецепт</button>
-										<button class="btn bg-secondary-subtle border-4 rounded">
-											<i class="fa-solid fa-heart"></i>
-										</button>
-									</div>
-								</div>
-							</div>
-						</div> 
-						
-						<!-- Карточка 5: Капусняк -->
-						<div class="col-12 col-sm-6 col-md-4 col-lg-4">
-							<div class="card p-2 shadow">
-								<img src="./assets/images/kapustnak.png" class="card-img-top" alt="Капусняк">
-								<div class="card-body">
-									<h5 class="card-title">Капусняк</h5>
-									<div>
-										<p><b>Складність</b></p>
-										<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-										<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-										<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-										<i style="color: #ffae00f1;" class="fa-regular fa-star"></i>
-										<i style="color: #ffae00f1;" class="fa-regular fa-star"></i>
-									</div>
-									<div>
-										<p>Капусняк — це традиційний український суп на основі квашеної капусти. Готується з м'ясного бульйону і має характерний кислуватий смак завдяки квашеній капусті.</p>
-									</div>
-									<div>
-										<button class="btn bg-dark text-white">Дивитись рецепт</button>
-										<button class="btn bg-secondary-subtle border-4 rounded"><i class="fa-solid fa-heart"></i></button>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						<!-- Карточка 6: Банош -->
-						<div class="col-12 col-sm-6 col-md-4 col-lg-4">
-							<div class="card p-2 shadow">
-								<img src="./assets/images/Banosh.png" class="card-img-top" alt="Банош">
-								<div class="card-body">
-									<h5 class="card-title">Банош</h5>
-									<div>
-										<p><b>Складність</b></p>
-										<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-										<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-										<i style="color: #ffae00f1;" class="fa-regular fa-star"></i>
-										<i style="color: #ffae00f1;" class="fa-regular fa-star"></i>
-										<i style="color: #ffae00f1;" class="fa-regular fa-star"></i>
-									</div>
-									<div>
-										<p>Банош — традиційна страва гуцульської кухні, в'язка кукурудзяна каша, заправлена шкварками, грибами та бринзою. Ідеальна для ситного обіду.</p>
-									</div>
-									<div>
-										<button class="btn bg-dark text-white">Дивитись рецепт</button>
-										<button class="btn bg-secondary-subtle border-4 rounded"><i class="fa-solid fa-heart"></i></button>
-									</div>
-								</div>
-							</div>
-						</div> 
-						
-						<!-- Карточка 7: Деруни -->
-						<div class="col-12 col-sm-6 col-md-4 col-lg-4">
-							<div class="card p-2 shadow">
-								<img src="./assets/images/deruny.png" class="card-img-top" alt="Деруни">
-								<div class="card-body">
-									<h5 class="card-title">Деруни</h5>
-									<div>
-										<p><b>Складність</b></p>
-										<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-										<i style="color: #ffae00f1;" class="fa-regular fa-star"></i>
-										<i style="color: #ffae00f1;" class="fa-regular fa-star"></i>
-										<i style="color: #ffae00f1;" class="fa-regular fa-star"></i>
-										<i style="color: #ffae00f1;" class="fa-regular fa-star"></i>
-									</div>
-									<div>
-										<p>Деруни — картопляні млинці, популярні в українській, польській, білоруській та інших кухнях Східної Європи. В Україні особливо поширені в північних і західних регіонах.</p>
-									</div>
-									<div>
-										<button class="btn bg-dark text-white">Дивитись рецепт</button>
-										<button class="btn bg-secondary-subtle border-4 rounded"><i class="fa-solid fa-heart"></i></button>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						<!-- Карточка 8: Куліш -->
-						<div class="col-12 col-sm-6 col-md-4 col-lg-4">
-							<div class="card p-2 shadow">
-								<img src="./assets/images/kulish.png" class="card-img-top" alt="Куліш">
-								<div class="card-body">
-									<h5 class="card-title">Куліш</h5>
-									<div>
-										<p><b>Складність</b></p>
-										<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-										<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-										<i style="color: #ffae00f1;" class="fa-regular fa-star"></i>
-										<i style="color: #ffae00f1;" class="fa-regular fa-star"></i>
-										<i style="color: #ffae00f1;" class="fa-regular fa-star"></i>
-									</div>
-									<div>
-										<p>Куліш — традиційна українська страва з пшона, вариться на м'ясній юшці або воді. Часто заправляється салом із цибулею та часником. Легко готується в польових умовах.</p>
-									</div>
-									<div>
-										<button class="btn bg-dark text-white">Дивитись рецепт</button>
-										<button class="btn bg-secondary-subtle border-4 rounded"><i class="fa-solid fa-heart"></i></button>
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						<!-- Карточка 9: Шпундра -->
-						<div class="col-12 col-sm-6 col-md-4 col-lg-4">
-							<div class="card p-2 shadow">
-								<img src="./assets/images/shpundra.png" class="card-img-top" alt="Шпундра">
-								<div class="card-body">
-									<h5 class="card-title">Шпундра</h5>
-									<div>
-										<p><b>Складність</b></p>
-										<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-										<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-										<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-										<i style="color: #ffae00f1;" class="fa-regular fa-star"></i>
-										<i style="color: #ffae00f1;" class="fa-regular fa-star"></i>
-									</div>
-									<div>
-										<p>Шпундра — традиційна українська страва, тушкована свинина з буряками в буряковому квасі. Смачна й ситна страва, схожа на верещаку, але заправляється борошном або пшоном.</p>
-									</div>
-									<div>
-										<button class="btn bg-dark text-white">Дивитись рецепт</button>
-										<button class="btn bg-secondary-subtle border-4 rounded"><i class="fa-solid fa-heart"></i></button>
-									</div>
-								</div>
-							</div>
-						</div>						
-                            <!-- <div class="w-100"></div>
-							 
-                            <div class="CARD p-2 shadow col">
-								<img src="" class="card-img-top" alt="">
-								<div class="card-body">
-								<h5 class="card-title">Назва</h5>
-								<div>
-                                    <p3><b>Складність</b></p3>
-									<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-									<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-									<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-									<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-									<i style="color: #ffae00f1;" class="fa-solid fa-star-half-stroke"></i>
-								</div>
-                                <div>
-                                    <p1>Опис</p1>
-                                </div>
-								<div>
-									<button class="btn bg-dark text-white">Дивитись рецепт</button>
-									<button class="btn bg-secondary-subtle  border-4 rounded"><i class="fa-solid fa-heart"></i></button>
-								</div>
-								</div>
-							</div>
-                            <div class="CARD p-2 shadow col">
-								<img src="" class="card-img-top" alt="">
-								<div class="card-body">
-								<h5 class="card-title">Назва</h5>
-								<div>
-                                    <p3><b>Складність</b></p3>
-									<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-									<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-									<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-									<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-									<i style="color: #ffae00f1;" class="fa-solid fa-star-half-stroke"></i>
-								</div>
-                                <div>
-                                    <p1>Опис</p1>
-                                </div>
-								<div>
-									<button class="btn bg-dark text-white">Дивитись рецепт</button>
-									<button class="btn bg-secondary-subtle  border-4 rounded"><i class="fa-solid fa-heart"></i></button>
-								</div>
-								</div>
-							</div>
-                            <div class="CARD p-2 shadow col">
-								<img src="" class="card-img-top" alt="">
-								<div class="card-body">
-								<h5 class="card-title">Назва</h5>
-								<div>
-                                    <p3><b>Складність</b></p3>
-									<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-									<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-									<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-									<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-									<i style="color: #ffae00f1;" class="fa-solid fa-star-half-stroke"></i>
-								</div>
-                                <div>
-                                    <p1>Опис</p1>
-                                </div>
-								<div>
-									<button class="btn bg-dark text-white">Дивитись рецепт</button>
-									<button class="btn bg-secondary-subtle  border-4 rounded"><i class="fa-solid fa-heart"></i></button>
-								</div>
-								</div>
-							</div>
-                            <div class="w-100"></div>
-                            <div class="CARD p-2 shadow col">
-								<img src="" class="card-img-top" alt="">
-								<div class="card-body">
-								<h5 class="card-title">Назва</h5>
-								<div>
-                                    <p3><b>Складність</b></p3>
-									<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-									<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-									<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-									<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-									<i style="color: #ffae00f1;" class="fa-solid fa-star-half-stroke"></i>
-								</div>
-                                <div>
-                                    <p1>Опис</p1>
-                                </div>
-								<div>
-									<button class="btn bg-dark text-white">Дивитись рецепт</button>
-									<button class="btn bg-secondary-subtle  border-4 rounded"><i class="fa-solid fa-heart"></i></button>
-								</div>
-								</div>
-							</div>
-                            <div class="CARD p-2 shadow col">
-								<img src="" class="card-img-top" alt="">
-								<div class="card-body">
-								<h5 class="card-title">Назва</h5>
-								<div>
-                                    <p3><b>Складність</b></p3>
-									<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-									<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-									<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-									<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-									<i style="color: #ffae00f1;" class="fa-solid fa-star-half-stroke"></i>
-								</div>
-                                <div>
-                                    <p1>Опис</p1>
-                                </div>
-								<div>
-									<button class="btn bg-dark text-white">Дивитись рецепт</button>
-									<button class="btn bg-secondary-subtle  border-4 rounded"><i class="fa-solid fa-heart"></i></button>
-								</div>
-								</div>
-							</div>
-                            <div class="CARD p-2 shadow col">
-								<img src="" class="card-img-top" alt="">
-								<div class="card-body">
-								<h5 class="card-title">Назва</h5>
-								<div>
-                                    <p3><b>Складність</b></p3>
-									<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-									<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-									<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-									<i style="color: #ffae00f1;" class="fa-solid fa-star"></i>
-									<i style="color: #ffae00f1;" class="fa-solid fa-star-half-stroke"></i>
-								</div>
-                                <div>
-                                    <p1>Опис</p1>
-                                </div>
-								<div>
-									<button class="btn bg-dark text-white">Дивитись рецепт</button>
-									<button class="btn bg-secondary-subtle  border-4 rounded"><i class="fa-solid fa-heart"></i></button>
-								</div>
-								</div>
-							</div> -->
-						</div>
-						</div>
-					</div>
-			</div>
-		</div>	
-    </main>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <script src="./assets/js/app.js"></script>
-</body>
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/11.0.1/firebase-app-compat.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script defer src="/__/firebase/11.0.1/firebase-auth-compat.js"></script>
+    <script defer src="/__/firebase/11.0.1/firebase-database-compat.js"></script>
+    <script defer src="/__/firebase/11.0.1/firebase-firestore-compat.js"></script>
+    <script defer src="/__/firebase/11.0.1/firebase-functions-compat.js"></script>
+    <script defer src="/__/firebase/11.0.1/firebase-messaging-compat.js"></script>
+    <script defer src="/__/firebase/11.0.1/firebase-storage-compat.js"></script>
+    <script defer src="/__/firebase/11.0.1/firebase-analytics-compat.js"></script>
+    <script defer src="/__/firebase/11.0.1/firebase-remote-config-compat.js"></script>
+    <script defer src="/__/firebase/11.0.1/firebase-performance-compat.js"></script>
+    <!-- 
+      initialize the SDK after all desired features are loaded, set useEmulator to false
+      to avoid connecting the SDK to running emulators.
+    -->
+    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+
+    <style media="screen">
+      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
+      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
+      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
+      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
+      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
+      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
+      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
+      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
+      @media (max-width: 600px) {
+        body, #message { margin-top: 0; background: white; box-shadow: none; }
+        body { border-top: 16px solid #ffa100; }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="message">
+      <h2>Welcome</h2>
+      <h1>Firebase Hosting Setup Complete</h1>
+      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
+      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
+    </div>
+    <p id="load">Firebase SDK Loading&hellip;</p>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const loadEl = document.querySelector('#load');
+        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+        // // The Firebase SDK is initialized and available here!
+        //
+        // firebase.auth().onAuthStateChanged(user => { });
+        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
+        // firebase.firestore().doc('/foo/bar').get().then(() => { });
+        // firebase.functions().httpsCallable('yourFunction')().then(() => { });
+        // firebase.messaging().requestPermission().then(() => { });
+        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
+        // firebase.analytics(); // call to activate
+        // firebase.analytics().logEvent('tutorial_completed');
+        // firebase.performance(); // call to activate
+        //
+        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+
+        try {
+          let app = firebase.app();
+          let features = [
+            'auth', 
+            'database', 
+            'firestore',
+            'functions',
+            'messaging', 
+            'storage', 
+            'analytics', 
+            'remoteConfig',
+            'performance',
+          ].filter(feature => typeof app[feature] === 'function');
+          loadEl.textContent = `Firebase SDK loaded with ${features.join(', ')}`;
+        } catch (e) {
+          console.error(e);
+          loadEl.textContent = 'Error loading the Firebase SDK, check the console.';
+        }
+      });
+    </script>
+  </body>
 </html>

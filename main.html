@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кулінарія</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="./assets/images/site-logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+    <div id="load">Завантаження Firebase...</div>
+    <div id="authContainer" style="display: none;">
+        <!-- Кнопка для входу/виходу -->
+        <button id="authButton" onclick="toggleAuth()">Увійти через Google</button>
+    </div>
+
+    <!-- Підключення скриптів Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+    <script type="module">
+        // Імпорт необхідних модулів з Firebase SDK
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+        import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-functions.js";
+        import { getStorage, ref as storageRef, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-storage.js";
+        import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
+        import { getPerformance } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-performance.js";
+
+        // Firebase конфігурація
+        const firebaseConfig = {
+            apiKey: "AIzaSyBaqNG8rvWzefiAOL7fm0Iq-XU6IQR8BhA",
+            authDomain: "culinary-diary-site.firebaseapp.com",
+            projectId: "culinary-diary-site",
+            storageBucket: "culinary-diary-site.appspot.com",
+            messagingSenderId: "717923230990",
+            appId: "1:717923230990:web:7b387924f6d4b75970635f",
+            measurementId: "G-WZ83X6KJ75"
+        };
+
+        // Ініціалізація Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const performance = getPerformance(app);
+        const auth = getAuth(app);
+        const database = getDatabase(app);
+        const firestore = getFirestore(app);
+        const functions = getFunctions(app);
+        const storage = getStorage(app);
+
+        // Перевірка ініціалізації
+        document.getElementById('load').textContent = 'Firebase SDK успішно завантажено!';
+    </script>
+
+    <header>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#"><i class="fa-solid fa-drumstick-bite fa-xl"></i></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#"><b>Головна</b></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./page-recepty.html">Рецепти</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./page-inne.html">Розробники</a>
+                        </li>
+                    </ul>                     
+                    <!-- Кнопка для показу тільки лайкнутих карточок -->
+                    <button id="showLiked" class="btn bg-secondary-subtle border-4 rounded me-2">
+                        <i class="fa-solid fa-heart"></i>
+                        <span id="headerLikeCount">0</span> <!-- Елемент для відображення кількості лайків -->
+                    </button>
+
+                    <!-- Поле пошуку (за замовчуванням приховане) -->
+                    <input id="searchInput" type="text" class="form-control" placeholder="Пошук страви" aria-label="Пошук страви" aria-describedby="basic-addon2" style="max-width: 200px; margin-right: 10px; display: none;">
+                    
+                    <!-- Кнопка перемикання теми -->
+                    <button id="themeToggle" class="btn btn-outline-secondary">
+                        <i id="themeIcon" class="fas fa-moon"></i>
+                    </button>
+
+                    <!-- Кнопка пошуку -->
+                    <button id="searchToggle" class="btn btn-outline-secondary">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>        
+
+    <main class="container py-5">
+        <div class="wrap d-flex flex-column">
+            <div class="flex-grow-1">
+                <h1 class="p-1">Кулінарний щоденник</h1>
+                <p class="text-justify">
+                    Ласкаво просимо на сайт "Кулінарний Щоденник" – вашого найкращого помічника у світі кулінарії! Ми пропонуємо унікальний простір, де ви можете знаходити та ділитися чудовими рецептами, натхненням для приготування страв, а також порадами від досвідчених кухарів.
+                </p>
+                <!-- Кнопка для додавання нової страви -->
+                <div class="row g-3">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                        <div class="card p-2 shadow d-flex align-items-center justify-content-center h-100">
+                            <!-- Кнопка для додавання нової страви -->
+                            <div class="btn-container">
+                                <button class="btn add-dish-btn w-100 h-100 d-flex flex-column align-items-center justify-content-center" onclick="addNewDish()">
+                                    <i class="fa-solid fa-plus fa-2xl"></i>
+                                    <span class="mt-2">Додати нову страву</span>
+                                </button>
+                            </div>
+                        
+                            <!-- Форма для додавання нової страви, спочатку прихована -->
+                            <div id="addDishForm" style="display: none;" class="form-container">
+                                <h4>Додати нову страву</h4>
+                                <input type="text" id="dishName" placeholder="Назва страви" class="form-control mb-2">
+                                <textarea id="dishDescription" placeholder="Опис страви" class="form-control mb-2"></textarea>
+                        
+                                <!-- Завантаження зображення -->
+                                <input type="file" id="dishImage" class="form-control mb-2" accept="image/*">
+                        
+                                <!-- Оцінка складності у вигляді зірок -->
+                                <label for="difficulty" class="rating-label">Складність приготування:</label>
+                                <div class="star-rating" id="starRating">
+                                    <span class="star" data-value="1">&#9733;</span>
+                                    <span class="star" data-value="2">&#9733;</span>
+                                    <span class="star" data-value="3">&#9733;</span>
+                                    <span class="star" data-value="4">&#9733;</span>
+                                    <span class="star" data-value="5">&#9733;</span>
+                                </div>
+                        
+                                <!-- Кнопки для збереження або скасування -->
+                                <button id="saveDishBtn" class="btn btn-primary w-100">Зберегти</button>
+                                <button id="cancelBtn" class="btn btn-secondary w-100 mt-2" onclick="cancelAddDish()">Скасувати</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+			</main>
+	<footer>
+		<p>© 2024 Українська Кухня. Всі права захищені.</p>
+		<div class="footer-links">
+			<a href="/about">Про нас</a>
+			<a href="/contact">Контакти</a>
+			<a href="/privacy">Конфіденційність</a>
+		</div>
+	</footer>
+    <script src="./assets/js/app.js"></script>
+</body>
+</html>

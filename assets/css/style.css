@@ -292,19 +292,28 @@ img {
     width: 300px;
 }
 
-.card>img {
-    width: 100%;
+.card > img {
+    width: 100%; /* Занимает всю ширину карточки */
+    height: 250px; /* Фиксированная высота, чтобы все изображения были одного размера */
+    object-fit: cover; /* Сохранение пропорций, центрирование и обрезка */
     margin: auto;
     margin-top: 3px;
-
+    border-radius: 8px; /* Если нужно закруглить углы */
 }
 
 .card {
     background-color: white; /* Основной фон карточки */
     border: 1px solid #ccc; /* Светлая рамка по умолчанию */
-    transition: background-color 0.3s, border-color 0.3s; /* Плавный переход для изменений */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Плавный переход для эффекта */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Эффект тени */
 }
+
+.card:hover {
+    transform: translateY(-5px); /* Двигает карточку вверх на 5px */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Увеличивает тень при наведении */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Плавный переход для движения и тени */
+}
+
 
 .card-body-theme {
     background-color: #333; /* Темный фон карточки в темной теме */
@@ -344,6 +353,119 @@ img {
     white-space: nowrap;        /* Запрещает перенос строк */
     max-width: 100%;           /* Устанавливает максимальную ширину */
 }
+
+
+
+
+.add-dish-btn {
+    background-color: transparent;
+    border: none;
+    color: #007bff;
+    font-size: 1rem;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.add-dish-btn:hover {
+    color: #0056b3;
+    transform: scale(1.2);
+}
+
+
+
+/* Скрыть форму по умолчанию */
+#addDishForm {
+    display: none;
+}
+
+/* Контейнер для кнопки добавления */
+.btn-container {
+    display: block;
+}
+
+/* Контейнер для формы, скрыть кнопку "Додати нове блюдо" */
+.form-container {
+    display: block;
+}
+
+/* Кнопка добавления страви */
+.add-dish-btn {
+    background-color: transparent; /* Убираем фон */
+    border: none; /* Убираем бордер */
+    color: inherit; /* Наследуем цвет текста */
+    font-size: 1.2em;
+    text-align: center;
+    padding: 15px 0;
+}
+
+/* Для светлой и темной темы */
+body.light-theme .add-dish-btn {
+    color: black;
+}
+
+body.dark-theme .add-dish-btn {
+    color: white;
+}
+
+/* Форма для добавления страви */
+.form-container {
+    display: none;
+}
+
+.star-rating {
+    font-size: 1.5em;
+    color: #ccc;
+}
+
+.star-rating .star {
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.star-rating .star.selected {
+    color: #ffae00; /* Золотой цвет для выбранных звезд */
+}
+
+.rating-label {
+    font-size: 1.1em;
+    margin-bottom: 10px;
+}
+
+.card {
+    border: 1px solid #ddd;
+}
+
+.card .btn {
+    font-size: 1.1em;
+}
+
+/* Кнопки внутри формы */
+button {
+    font-size: 1em;
+    padding: 10px;
+}
+
+/* Для скрытия кнопки при открытии формы */
+#addDishForm {
+    display: none;
+}
+
+/* Стили для текста в темной теме */
+body.dark-theme .add-dish-btn span, 
+body.dark-theme #addDishForm h4, 
+body.dark-theme .rating-label {
+    color: white; /* Белый цвет для текста */
+}
+
+/* Стили для кнопки и заголовков в светлой теме */
+body.light-theme .add-dish-btn span,
+body.light-theme #addDishForm h4, 
+body.light-theme .rating-label {
+    color: black; /* Черный цвет для текста */
+}
+
+
+
+
 
 
 @media (max-width: 576px) {
