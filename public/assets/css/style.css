@@ -11,6 +11,26 @@ body.dark-theme {
     color: #fff;
 }
 
+.card {
+    transition: all 0.5s ease;
+}
+
+.card-body p {
+    max-height: 50px; /* Ограничиваем высоту */
+    overflow: hidden; /* Прячем текст, выходящий за пределы */
+    text-overflow: ellipsis; /* Добавляем многоточие */
+    display: -webkit-box; /* Для совместимости с браузерами */
+    -webkit-box-orient: vertical; /* Устанавливаем вертикальную ориентацию */
+}
+
+
+body.dark-theme .card {
+    background-color: #333; /* Темный фон карточек */
+    color: #fff; /* Белый текст */
+    border: 1px solid #444; /* Темная граница */
+}
+
+
 body, .navbar, header, .nav-link, .navbar-brand i {
     transition: all 0.8s ease;
 }

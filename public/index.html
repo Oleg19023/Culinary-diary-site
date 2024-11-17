@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
@@ -12,51 +11,6 @@
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 <body>
-    <div id="load">Завантаження Firebase...</div>
-    <div id="authContainer" style="display: none;">
-        <!-- Кнопка для входу/виходу -->
-        <button id="authButton" onclick="toggleAuth()">Увійти через Google</button>
-    </div>
-
-    <!-- Підключення скриптів Bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-
-    <script type="module">
-        // Імпорт необхідних модулів з Firebase SDK
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
-        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-        import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-functions.js";
-        import { getStorage, ref as storageRef, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-storage.js";
-        import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
-        import { getPerformance } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-performance.js";
-
-        // Firebase конфігурація
-        const firebaseConfig = {
-            apiKey: "AIzaSyBaqNG8rvWzefiAOL7fm0Iq-XU6IQR8BhA",
-            authDomain: "culinary-diary-site.firebaseapp.com",
-            projectId: "culinary-diary-site",
-            storageBucket: "culinary-diary-site.appspot.com",
-            messagingSenderId: "717923230990",
-            appId: "1:717923230990:web:7b387924f6d4b75970635f",
-            measurementId: "G-WZ83X6KJ75"
-        };
-
-        // Ініціалізація Firebase
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        const performance = getPerformance(app);
-        const auth = getAuth(app);
-        const database = getDatabase(app);
-        const firestore = getFirestore(app);
-        const functions = getFunctions(app);
-        const storage = getStorage(app);
-
-        // Перевірка ініціалізації
-        document.getElementById('load').textContent = 'Firebase SDK успішно завантажено!';
-    </script>
-
     <header>
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
@@ -106,28 +60,22 @@
                 <p class="text-justify">
                     Ласкаво просимо на сайт "Кулінарний Щоденник" – вашого найкращого помічника у світі кулінарії! Ми пропонуємо унікальний простір, де ви можете знаходити та ділитися чудовими рецептами, натхненням для приготування страв, а також порадами від досвідчених кухарів.
                 </p>
-                <!-- Кнопка для додавання нової страви -->
+
                 <div class="row g-3">
                     <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                         <div class="card p-2 shadow d-flex align-items-center justify-content-center h-100">
-                            <!-- Кнопка для додавання нової страви -->
                             <div class="btn-container">
                                 <button class="btn add-dish-btn w-100 h-100 d-flex flex-column align-items-center justify-content-center" onclick="addNewDish()">
                                     <i class="fa-solid fa-plus fa-2xl"></i>
                                     <span class="mt-2">Додати нову страву</span>
                                 </button>
                             </div>
-                        
-                            <!-- Форма для додавання нової страви, спочатку прихована -->
+
                             <div id="addDishForm" style="display: none;" class="form-container">
                                 <h4>Додати нову страву</h4>
-                                <input type="text" id="dishName" placeholder="Назва страви" class="form-control mb-2">
-                                <textarea id="dishDescription" placeholder="Опис страви" class="form-control mb-2"></textarea>
-                        
-                                <!-- Завантаження зображення -->
-                                <input type="file" id="dishImage" class="form-control mb-2" accept="image/*">
-                        
-                                <!-- Оцінка складності у вигляді зірок -->
+                                <input type="text" id="dishName" placeholder="Назва страви" class="form-control mb-2" required>
+                                <textarea id="dishDescription" placeholder="Опис страви" class="form-control mb-2" required></textarea>
+                                <input type="file" id="dishImage" class="form-control mb-2" accept="image/*" required>
                                 <label for="difficulty" class="rating-label">Складність приготування:</label>
                                 <div class="star-rating" id="starRating">
                                     <span class="star" data-value="1">&#9733;</span>
@@ -136,23 +84,125 @@
                                     <span class="star" data-value="4">&#9733;</span>
                                     <span class="star" data-value="5">&#9733;</span>
                                 </div>
-                        
-                                <!-- Кнопки для збереження або скасування -->
                                 <button id="saveDishBtn" class="btn btn-primary w-100">Зберегти</button>
                                 <button id="cancelBtn" class="btn btn-secondary w-100 mt-2" onclick="cancelAddDish()">Скасувати</button>
                             </div>
                         </div>
-                    </div>
+                    </div>                    	
+                    <!-- Контейнер для карточек -->
+                    <div id="dishContainer" class="row g-3 "></div>
                 </div>
-			</main>
-	<footer>
-		<p>© 2024 Українська Кухня. Всі права захищені.</p>
-		<div class="footer-links">
-			<a href="/about">Про нас</a>
-			<a href="/contact">Контакти</a>
-			<a href="/privacy">Конфіденційність</a>
-		</div>
-	</footer>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2024 Українська Кухня. Всі права захищені.</p>
+        <div class="footer-links">
+            <a href="/about">Про нас</a>
+            <a href="/contact">Контакти</a>
+            <a href="/privacy">Конфіденційність</a>
+        </div>
+    </footer>
     <script src="./assets/js/app.js"></script>
+    <script src="./assets/js/firebase-database.js"></script>
+<script type="module">
+
+// // Импорт функций из Firebase
+// import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+// import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+
+// // Конфигурация Firebase
+// const firebaseConfig = {
+//     apiKey: "AIzaSyBaqNG8rvWzefiAOL7fm0Iq-XU6IQR8BhA",
+//     authDomain: "culinary-diary-site.firebaseapp.com",
+//     databaseURL: "https://culinary-diary-site-default-rtdb.firebaseio.com",
+//     projectId: "culinary-diary-site",
+//     storageBucket: "culinary-diary-site.appspot.com",
+//     messagingSenderId: "717923230990",
+//     appId: "1:717923230990:web:7b387924f6d4b75970635f",
+//     measurementId: "G-WZ83X6KJ75",
+// };
+
+// // Инициализация Firebase
+// const app = initializeApp(firebaseConfig);
+// const database = getDatabase(app);
+
+// function loadTestData() {
+//     const testCollection = db.collection("1234"); // Укажите коллекцию
+
+//     testCollection.doc("12345").get().then((doc) => {
+//         if (doc.exists) {
+//             const data = doc.data();
+//             console.log("Полученные данные:", data);
+
+//             // Добавляем данные на страницу
+//             document.getElementById("output").innerText = JSON.stringify(data);
+//         } else {
+//             console.log("Документ не найден!");
+//         }
+//     }).catch((error) => {
+//         console.error("Ошибка получения документа:", error);
+//     });
+// }
+
+// // Загрузить данные при загрузке страницы
+// window.onload = loadTestData;
+
+
+// export function addDish(dish) {
+//     const dishesRef = ref(database, 'dishes');
+//     return push(dishesRef, dish);
+// }
+
+// export function loadDishes(callback) {
+//     const dishesRef = ref(database, 'dishes');
+//     onValue(dishesRef, (snapshot) => {
+//         const dishes = snapshot.val();
+//         callback(dishes || {});
+//     });
+// }
+
+
+
+
+
+
+
+// // Сохранить новое блюдо
+// document.getElementById('saveDishBtn').addEventListener('click', function () {
+//     const dishName = document.getElementById('dishName').value;
+//     const dishDescription = document.getElementById('dishDescription').value;
+//     const difficulty = document.querySelectorAll('#starRating .star.selected').length;
+
+//     if (dishName && dishDescription && difficulty > 0) {
+//         const newDish = {
+//             name: dishName,
+//             description: dishDescription,
+//             difficulty: difficulty,
+//             createdAt: new Date().toISOString(),
+//         };
+
+//         addDish(newDish)
+//             .then(() => {
+//                 alert("Страву додано!");
+//                 cancelAddDish();
+//             })
+//             .catch((error) => {
+//                 console.error('Помилка при додаванні страви: ', error);
+//                 alert('Щось пішло не так! Спробуйте ще раз.');
+//             });
+//     } else {
+//         alert('Заповніть усі поля!');
+//     }
+// });
+
+
+// // Загрузка блюд при старте
+// window.onload = function () {
+//     loadDishes(renderDishes);
+// };
+
+</script>   
 </body>
 </html>
