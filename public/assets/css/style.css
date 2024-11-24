@@ -528,56 +528,6 @@ body.light-theme .rating-label {
 
 
 
-
-
-
-/* Контейнер для фона */
-.video-background {
-    position: relative;
-    width: 100%;
-    height: 100vh; /* Занимает весь экран */
-    overflow: hidden; /* Обрезает видео, если оно выходит за пределы контейнера */
-}
-
-/* Видео */
-.background-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Видео будет растягиваться, чтобы полностью покрыть экран */
-    z-index: -1; /* Размещает видео на заднем плане */
-}
-
-/* Содержание на фоне */
-.content {
-    position: relative;
-    z-index: 1; /* Содержимое будет отображаться поверх видео */
-    text-align: center;
-    color: white;
-    padding-top: 20%;
-}
-
-/* Заголовок */
-h1 {
-    font-size: 3em;
-    margin: 0;
-}
-
-/* Текст */
-p {
-    font-size: 1.5em;
-}
-
-
-
-
-
-
-
-
-
 @media (max-width: 576px) {
     .card {
         flex: 1 1 100%; /* 1 карточка в ряду */
