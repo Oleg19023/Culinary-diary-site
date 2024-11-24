@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кулінарія</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="./assets/images/site-logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+	<header>
+		<nav class="navbar navbar-expand-lg">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="#"><i class="fa-solid fa-drumstick-bite fa-xl"></i></a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto">
+						<li class="nav-item">
+							<a class="nav-link" aria-current="page" href="./index.html">Головна</a>
+						</li>
+						<li class="nav-item">
+                            <a class="nav-link" href="#"><b>Адмін-панель(Beta)</b></a>
+                        </li>
+					</ul> 					
+	
+					<!-- Поле поиска (по умолчанию скрыто) -->
+					<input id="searchInput" type="text" class="form-control" placeholder="Пошук страви" aria-label="Пошук страви" aria-describedby="basic-addon2" style="max-width: 200px; margin-right: 10px; display: none;">
+					
+					<!-- Кнопка переключения темы -->
+					<button id="themeToggle" class="btn btn-outline-secondary me-2">
+						<i id="themeIcon" class="fas fa-moon"></i>
+					</button>
+	
+					<!-- Кнопка поиска -->
+					<button id="searchToggle" class="btn btn-outline-secondary">
+						<i class="fa-solid fa-magnifying-glass"></i>
+					</button>
+				</div>
+			</div>
+		</nav>
+	</header>
+	<main class="container">
+		<div class="container">    
+			<div class="wrap d-flex flex-column">
+				<main class="flex-grow-1">
+					<h1 id="accessStatus" class="text-red">Доступ заблоковано!</h1>
+					<button id="showLoginForm">Увійти в систему</button>
+					<div id="loginForm" style="display: none; margin-top: 20px;">
+						<input type="text" id="username" class="form-control mb-2" placeholder="Логін">
+						<input type="password" id="password" class="form-control mb-2" placeholder="Пароль">
+						<button id="loginButton" class="btn btn-primary">Увійти</button>
+						<p id="loginStatus" style="color: red; display: none;">Невірний логін або пароль</p>
+					</div>
+					<div id="adminMenu" style="display: none; margin-top: 20px;">
+						<h2>Меню адміністратора</h2>
+						<ul>
+							<li><a href="#manageCategories">Керування категоріями</a></li>
+							<li><a href="#manageUsers">Керування користувачами</a></li>
+							<li><a href="#viewReports">Перегляд звітів</a></li>
+							<li><a href="#manageReviews">Керування відгуками</a></li>
+							<li><a href="#manageNews">Додати новину</a></li>
+						</ul>
+						<hr>
+						<div class="admin-actions">
+							<h3>Дії адміністратора:</h3>
+							<button id="backupDatabase" class="btn btn-secondary mb-2">Резервне копіювання бази даних</button>
+							<button id="restoreDatabase" class="btn btn-secondary mb-2">Відновлення бази даних</button>
+							<button id="clearCache" class="btn btn-secondary mb-2">Очистити кеш</button>
+							<button id="sendNotifications" class="btn btn-secondary mb-2">Надіслати повідомлення користувачам</button>
+						</div>
+						<hr>
+						<h3>Налаштування:</h3>
+						<form id="settingsForm">
+							<label for="siteTitle" class="form-label">Назва сайту:</label>
+							<input type="text" id="siteTitle" class="form-control mb-2" placeholder="Введіть назву сайту">
+							<label for="languageSelect" class="form-label">Мова інтерфейсу:</label>
+							<select id="languageSelect" class="form-control mb-2">
+								<option value="uk">Українська</option>
+								<option value="ru">Русский</option>
+								<option value="en">English</option>
+							</select>
+							<label for="notificationsToggle" class="form-label">Відображення повідомлень:</label>
+							<input type="checkbox" id="notificationsToggle" checked class="form-check-input mb-2">
+							<label for="contactEmail" class="form-label">Електронна пошта для контактів:</label>
+							<input type="email" id="contactEmail" class="form-control mb-2" placeholder="example@mail.com">
+							<label for="contactPhone" class="form-label">Телефон для контактів:</label>
+							<input type="text" id="contactPhone" class="form-control mb-2" placeholder="+380123456789">
+							<label for="siteLogo" class="form-label">Логотип сайту:</label>
+							<input type="file" id="siteLogo" class="form-control mb-2">
+							<button id="saveSettings" class="btn btn-primary">Зберегти налаштування</button>
+						</form>
+					
+						<!-- Кнопка Вийти з системи -->
+						<button id="logoutButton" class="btn btn-danger" style="margin-top: 20px;">Вийти з системи</button>
+					</div>					
+				</main>
+			</div>
+		</div>    
+	</main>			
+    <script src="./assets/js/theme-search.js"></script>
+	<script src="./assets/js/admin-admin.js"></script>
+	<script src="./assets/js/footer.js"></script>
+	<script src="credentials.js"></script>
+</body>
+</html>

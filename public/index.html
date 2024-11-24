@@ -28,9 +28,6 @@
                         <li class="nav-item">
                             <a class="nav-link" href="./page-recepty.html">Рецепти</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./page-inne.html">Розробники</a>
-                        </li>
                     </ul>                     
                     <!-- Кнопка для показу тільки лайкнутих карточок -->
                     <button id="showLiked" class="btn bg-secondary-subtle border-4 rounded me-2">
@@ -53,13 +50,13 @@
                 </div>
             </div>
         </nav>
-    </header>        
-
+    </header>
+    
     <main class="container py-5">
         <div class="wrap d-flex flex-column">
             <div class="flex-grow-1">
-                <h1 class="p-1">Кулінарний щоденник</h1>
-                <p class="text-justify">
+                <h1 class="p-1 gradient-text">Кулінарний щоденник</h1>
+                <p class="text-justify intro-text">
                     Ласкаво просимо на сайт "Кулінарний Щоденник" – вашого найкращого помічника у світі кулінарії! Ми пропонуємо унікальний простір, де ви можете знаходити та ділитися чудовими рецептами, натхненням для приготування страв, а також порадами від досвідчених кухарів.
                 </p>
     
@@ -84,7 +81,7 @@
                                 <div id="dishCategory" class="d-flex flex-wrap gap-2 mb-3">
                                     <button class="btn btn-outline-primary btn-sm category-btn-create" data-category="Холодні страви та закуски">Холодні страви та закуски</button>
                                     <button class="btn btn-outline-primary btn-sm category-btn-create" data-category="Рибні">Рибні</button>
-                                    <button class="btn btn-outline-primary btn-sm category-btn-create" data-category="Перші страви (Супи)">Перші страви (Супи)</button>
+                                    <button class="btn btn-outline-primary btn-sm category-btn-create" data-category="Перші страви">Перші страви</button>
                                     <button class="btn btn-outline-primary btn-sm category-btn-create" data-category="Другі страви">Другі страви</button>
                                     <button class="btn btn-outline-primary btn-sm category-btn-create" data-category="Солодкі страви, вироби">Солодкі страви, вироби</button>
                                     <button class="btn btn-outline-primary btn-sm category-btn-create" data-category="Напої">Напої</button>
@@ -124,7 +121,7 @@
                         <button class="btn btn-outline-primary category-btn" data-category="all">Всі</button>
                         <button class="btn btn-outline-primary category-btn" data-category="Холодні страви та закуски">Холодні страви та закуски</button>
                         <button class="btn btn-outline-primary category-btn" data-category="Рибні">Рибні</button>
-                        <button class="btn btn-outline-primary category-btn" data-category="Перші страви (Супи)">Перші страви (Супи)</button>
+                        <button class="btn btn-outline-primary category-btn" data-category="Перші страви">Перші страви</button>
                         <button class="btn btn-outline-primary category-btn" data-category="Другі страви">Другі страви</button>
                         <button class="btn btn-outline-primary category-btn" data-category="Солодкі страви, вироби">Солодкі страви, вироби</button>
                         <button class="btn btn-outline-primary category-btn" data-category="Напої">Напої</button>
@@ -153,23 +150,18 @@
                     </div>
     
                     <!-- Контейнер для карточек -->
-                    <div id="dishContainer" class="row g-3"></div>
+                    <div id="dishContainer" class="row g-3">Завантаження...</div>
                 </div>
     
             </div>
         </div>
     </main>
-    
 
-    <footer>
-        <p>© 2024 Українська Кухня. Всі права захищені.</p>
-        <div class="footer-links">
-            <a href="/about">Про нас</a>
-            <a href="/contact">Контакти</a>
-            <a href="/privacy">Конфіденційність</a>
-        </div>
-    </footer>
+    <!-- <-Footer-JS-> -->
+
     <script src="./assets/js/app.js"></script>
+    <script src="./assets/js/theme-search.js"></script>
+    <script src="./assets/js/footer.js"></script>
     <script src="./assets/js/firebase-database.js"></script> 
 </body>
 </html>
