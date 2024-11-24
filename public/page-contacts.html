@@ -44,15 +44,54 @@
 			</div>
 		</nav>
 	</header>
-    <main class="container">
-        <div class="container">	
-			<div class="wrap d-flex flex-column">
-					<main class="flex-grow-1">
-						<h1 class="p-1">Контактні дані:</h1>
-					</main>
+	<main class="container mt-4" style="max-width: 800px; display: block;">
+		<h2>Напишіть нам</h2>
+		<form id="contactForm">
+			<!-- Поле для ввода email -->
+			<div class="mb-3">
+				<label for="email" class="form-label">Електронна пошта</label>
+				<input type="email" class="form-control" id="email" value="sluckijanton@gmail.com">
 			</div>
-		</div>	
-    </main>
+			<!-- Поле для выбора типа сообщения -->
+			<div class="mb-3">
+				<label for="messageType" class="form-label">Тип повідомлення</label>
+				<select class="form-select" id="messageType">
+					<option value="відгук" selected>Відгук</option>
+					<option value="запитання">Запитання</option>
+					<option value="інше">Інше</option>
+				</select>
+			</div>
+			<!-- Поле для ввода заголовка -->
+			<div class="mb-3">
+				<label for="subject" class="form-label">Заголовок</label>
+				<input type="text" class="form-control" id="subject" value="Відгук">
+			</div>
+			<!-- Поле для текста сообщения -->
+			<div class="mb-3">
+				<label for="messageText" class="form-label">Ваше повідомлення</label>
+				<textarea class="form-control" id="messageText" rows="5"></textarea>
+			</div>
+			<!-- Поле для ввода имени -->
+			<div class="mb-3">
+				<label for="name" class="form-label">Ваше ім'я</label>
+				<input type="text" class="form-control" id="name">
+			</div>
+			<!-- Меню выбора оценки -->
+			<div class="mb-3" id="ratingContainer">
+				<label for="rating" class="form-label">Оцініть наш сервіс</label>
+				<select class="form-select" id="rating">
+					<option value="1">1 зірка</option>
+					<option value="2">2 зірки</option>
+					<option value="3">3 зірки</option>
+					<option value="4">4 зірки</option>
+					<option value="5">5 зірок</option>
+				</select>
+			</div>
+			<!-- Кнопка отправки -->
+			<button type="button" id="submitButton" class="btn btn-primary">Відправити</button>
+		</form>
+	</main>	
+	<script src="./assets/js/page-contacts.js"></script>
     <script src="./assets/js/theme-search.js"></script>
 	<script src="./assets/js/footer.js"></script>
 </body>
